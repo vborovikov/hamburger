@@ -42,13 +42,17 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 And then you'll get this:
 
 Snapped view
+
 ![Snapped view](docs/snapped.png)
 
 Narrow view
+
 ![Narrow view](docs/narrow.png)
 
 Square view
+
 ![Square view](docs/square.png)
 
 Wide view
+
 ![Wide view](docs/wide.png)
