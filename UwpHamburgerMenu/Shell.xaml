@@ -1,0 +1,159 @@
+﻿<Page x:Class="UwpHamburgerMenu.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+ <Page.Resources>
+  <Style x:Key="ShellButton"
+         TargetType="ButtonBase">
+   <Setter Property="Background"
+           Value="Transparent" />
+   <Setter Property="BorderBrush"
+           Value="{x:Null}" />
+   <Setter Property="BorderThickness"
+           Value="0" />
+   <Setter Property="Margin"
+           Value="0" />
+   <Setter Property="Width"
+           Value="{ThemeResource SplitViewCompactPaneThemeLength}" />
+   <Setter Property="Height"
+           Value="{ThemeResource SplitViewCompactPaneThemeLength}" />
+   <Setter Property="HorizontalAlignment"
+           Value="Left" />
+   <Setter Property="VerticalAlignment"
+           Value="Top" />
+  </Style>
+ </Page.Resources>
+
+ <Grid>
+
+  <VisualStateManager.VisualStateGroups>
+   <VisualStateGroup>
+    <VisualState>
+     <VisualState.StateTriggers>
+      <AdaptiveTrigger MinWindowWidth="900" />
+     </VisualState.StateTriggers>
+     <VisualState.Setters>
+      <Setter Target="ShellSplitView.DisplayMode"
+              Value="Inline" />
+      <Setter Target="ShellSplitView.IsPaneOpen"
+              Value="True" />
+      <Setter Target="HamburgerButton.Visibility"
+              Value="Collapsed" />
+     </VisualState.Setters>
+    </VisualState>
+    <VisualState>
+     <VisualState.StateTriggers>
+      <AdaptiveTrigger MinWindowWidth="720" />
+     </VisualState.StateTriggers>
+     <VisualState.Setters>
+      <Setter Target="ShellSplitView.DisplayMode"
+              Value="CompactInline" />
+      <Setter Target="ShellSplitView.IsPaneOpen"
+              Value="True" />
+     </VisualState.Setters>
+    </VisualState>
+    <VisualState>
+     <VisualState.StateTriggers>
+      <AdaptiveTrigger MinWindowWidth="548" />
+     </VisualState.StateTriggers>
+     <VisualState.Setters>
+      <Setter Target="ShellSplitView.DisplayMode"
+              Value="CompactOverlay" />
+      <Setter Target="ShellSplitView.IsPaneOpen"
+              Value="False" />
+     </VisualState.Setters>
+    </VisualState>
+    <VisualState>
+     <VisualState.StateTriggers>
+      <AdaptiveTrigger MinWindowWidth="0" />
+     </VisualState.StateTriggers>
+     <VisualState.Setters>
+      <Setter Target="ShellSplitView.DisplayMode"
+              Value="Overlay" />
+      <Setter Target="ShellSplitView.IsPaneOpen"
+              Value="False" />
+     </VisualState.Setters>
+    </VisualState>
+   </VisualStateGroup>
+   <VisualStateGroup>
+    <VisualState>
+     <VisualState.StateTriggers>
+      <StateTrigger IsActive="{Binding IsPaneOpen, ElementName=ShellSplitView}" />
+     </VisualState.StateTriggers>
+     <VisualState.Setters>
+      <Setter Target="FooterPanel.Orientation"
+              Value="Horizontal" />
+      <Setter Target="FooterPanel.HorizontalAlignment"
+              Value="Right" />
+     </VisualState.Setters>
+    </VisualState>
+   </VisualStateGroup>
+  </VisualStateManager.VisualStateGroups>
+
+  <SplitView x:Name="ShellSplitView"
+             OpenPaneLength="240"
+             DisplayMode="Overlay"
+             IsPaneOpen="False">
+   <SplitView.Pane>
+    <Grid HorizontalAlignment="Stretch">
+
+     <Grid.RowDefinitions>
+      <RowDefinition Height="{ThemeResource SplitViewCompactPaneThemeLength}" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+     </Grid.RowDefinitions>
+
+     <StackPanel x:Name="NavigationPanel"
+                 HorizontalAlignment="Stretch"
+                 Grid.Row="1">
+      <AppBarButton Style="{StaticResource ShellButton}"
+                    Width="{Binding OpenPaneLength, ElementName=ShellSplitView}">
+       <StackPanel Orientation="Horizontal">
+        <SymbolIcon Symbol="Home"
+                    Margin="14,0" />
+        <TextBlock Text="Here go" />
+       </StackPanel>
+      </AppBarButton>
+      <AppBarButton Style="{StaticResource ShellButton}"
+                    Width="{Binding OpenPaneLength, ElementName=ShellSplitView}">
+       <StackPanel Orientation="Horizontal">
+        <SymbolIcon Symbol="Map"
+                    Margin="14,0" />
+        <TextBlock Text="Navigational" />
+       </StackPanel>
+      </AppBarButton>
+      <AppBarButton Style="{StaticResource ShellButton}"
+                    Width="{Binding OpenPaneLength, ElementName=ShellSplitView}">
+       <StackPanel Orientation="Horizontal">
+        <SymbolIcon Symbol="List"
+                    Margin="14,0" />
+        <TextBlock Text="Categories" />
+       </StackPanel>
+      </AppBarButton>
+     </StackPanel>
+
+     <StackPanel x:Name="FooterPanel"
+                 Orientation="Vertical"
+                 Grid.Row="2">
+      <AppBarButton Icon="Setting"
+                    Style="{StaticResource ShellButton}" />
+      <AppBarButton Icon="Help"
+                    Style="{StaticResource ShellButton}" />
+     </StackPanel>
+    </Grid>
+   </SplitView.Pane>
+   <SplitView.Content>
+    <Frame x:Name="PresentationFrame"
+           x:FieldModifier="Internal" />
+   </SplitView.Content>
+  </SplitView>
+  <ToggleButton x:Name="HamburgerButton"
+                IsChecked="{Binding IsPaneOpen, ElementName=ShellSplitView, Mode=TwoWay}"
+                IsTabStop="False"
+                IsThreeState="False"
+                ClickMode="Press"
+                Style="{StaticResource ShellButton}">
+   <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+             Glyph="&#xE700;" />
+  </ToggleButton>
+ </Grid>
+</Page>
